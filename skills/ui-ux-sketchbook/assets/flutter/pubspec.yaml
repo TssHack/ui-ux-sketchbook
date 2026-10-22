@@ -1,0 +1,17 @@
+name: sketchbook
+description: Hand-drawn UI primitives for Flutter from the ui-ux-sketchbook skill - rough ink outlines, coloured-pencil shading, hand lettering and illustrations. No dependencies beyond the Flutter SDK.
+version: 1.1.0
+repository: https://github.com/TssHack/ui-ux-sketchbook
+publish_to: none
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

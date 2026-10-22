@@ -1,0 +1,4 @@
+# Default analyzer checks only, so the package needs nothing beyond the Flutter SDK.
+analyzer:
+  language:
+    strict-casts: true
