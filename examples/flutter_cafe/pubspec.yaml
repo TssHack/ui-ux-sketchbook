@@ -1,0 +1,20 @@
+name: flutter_cafe
+description: The ui-ux-sketchbook café demo in Flutter (Android, iOS, web, desktop).
+publish_to: none
+version: 1.1.0
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sketchbook:
+    path: ../../skills/ui-ux-sketchbook/assets/flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
