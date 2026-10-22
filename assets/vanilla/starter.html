@@ -1,0 +1,236 @@
+<!doctype html>
+<!-- ui-ux-sketchbook starter (single page, no framework).
+     RTL Persian by default. For an LTR site: lang="en" dir="ltr", swap the fonts, flip the side sheet.
+     Develop with the three local files next to this one, then run scripts/inline_assets.py to get one self-contained file.
+     Replace every DEMO value; keep the structure that makes it work on phones. -->
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نام کسب‌وکار</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Vazirmatn:wght@400;500;700;800&family=Aref+Ruqaa:wght@400;700&display=swap">
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* Fonts for sketch.css tokens */
+  :root { --font-hand: "Gochi Hand"; --font-body: "Vazirmatn"; --font-body-hand: "Aref Ruqaa"; }
+
+  /* ---------- Header: phone bar, desktop band ---------- */
+  .header { position: sticky; top: 0; z-index: 40; --edge-x: 50%; --edge-y: 50%; --tint-strength: .7; background: color-mix(in srgb, var(--band) 82%, var(--paper)); }
+  .header__inner { max-width: 1200px; margin-inline: auto; padding: 0 var(--gutter-r) 0 var(--gutter); height: var(--header-h); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .badge { width: 56px; height: 56px; border-radius: 50%; display: grid; place-content: center; text-align: center; background: var(--paper-2); font-family: var(--hand); line-height: .9; font-size: .8rem; flex: none; text-decoration: none; color: var(--ink); }
+  .badge b { font-size: 1rem; font-weight: 400; }
+  .nav { display: none; }
+  .nav a { font-family: var(--hand); font-size: clamp(1.15rem, 1.7vw, 1.45rem); white-space: nowrap; text-decoration: none; color: var(--ink); padding: 2px 8px; }
+  .icon-btn { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; background: var(--paper-2); }
+  .icon-btn svg { width: 24px; height: 24px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; }
+  @media (min-width: 900px) {
+    .header__inner { display: grid; grid-template-columns: 1fr auto 1fr; }
+    .nav { display: flex; justify-content: space-around; }
+    .badge { width: 132px; height: 132px; margin-block: -36px; position: relative; z-index: 5; font-size: 1rem; }
+    .badge b { font-size: 2rem; }
+    .menu-btn { display: none; }
+  }
+
+  /* Side sheet menu (native dialog: focus trap and Esc for free) */
+  .sheet { margin: 0 0 0 auto; height: 100dvh; max-height: none; width: min(320px, 86vw); border: 0; padding: 24px 22px; background: var(--paper); color: var(--ink); }
+  [dir="ltr"] .sheet { margin: 0 auto 0 0; }
+  .sheet::backdrop { background: rgb(47 36 27 / .4); }
+  .sheet ul { list-style: none; margin: 16px 0; padding: 0; display: grid; }
+  .sheet a { display: flex; justify-content: space-between; padding: 12px 4px; border-bottom: 1.5px dashed rgb(47 36 27 / .25); font-weight: 700; text-decoration: none; color: inherit; }
+
+  /* ---------- Hero ---------- */
+  .hero { --edge-x: 22%; --edge-y: 30%; --tint-strength: 1; background: radial-gradient(ellipse at 50% 50%, var(--wash) 30%, #d6dfb4 85%); padding-block: 28px 18px; }
+  .hero__grid { display: grid; gap: 18px; }
+  .hero__copy { display: grid; justify-items: start; gap: 12px; }
+  .hero h1 { margin: 0; display: grid; gap: 4px; }
+  .hero__hand { font-size: clamp(2.4rem, 9vw, 4.2rem); line-height: 1; justify-self: start; }
+  .hero__line { font-size: clamp(1.15rem, 3.8vw, 1.6rem); font-weight: 800; }
+  .hero p { margin: 0; max-width: 46ch; color: var(--ink-soft); }
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .scenes { display: grid; }
+  .scene { grid-area: 1 / 1; display: grid; grid-template-columns: 1fr 2.3fr 1fr; align-items: end; gap: 8px; opacity: 0; visibility: hidden; transition: opacity .5s, visibility .5s; direction: ltr; }
+  .scene.is-active { opacity: 1; visibility: visible; }
+  .scene > span { display: block; }
+  .dots { display: flex; justify-content: center; gap: 4px; margin-top: 8px; }
+  .dots button { width: 28px; height: 28px; display: grid; place-items: center; }
+  .dots button::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ink); }
+  .dots button[aria-selected="true"]::before { background: var(--ink); }
+  @media (min-width: 600px) and (max-width: 899px) {
+    .hero__copy { justify-items: center; text-align: center; } .hero__hand { justify-self: center; } .hero p { margin-inline: auto; } .cta { justify-content: center; }
+    .stage { max-width: 540px; width: 100%; justify-self: center; }
+  }
+  @media (min-width: 900px) { .hero { padding-block: 72px 26px; } .hero__grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.2fr); align-items: center; gap: 36px; } }
+
+  /* ---------- Sections ---------- */
+  section { padding-block: 36px 8px; }
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; direction: ltr; }
+  .card { --edge-x: 24%; --edge-y: 26%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 12px 6px 10px; border-radius: 16px; background: var(--paper-2); text-decoration: none; color: var(--ink); transition: transform .2s; }
+  .card:hover { transform: rotate(-1.5deg) translateY(-4px); }
+  .card__art { height: 58px; width: 100%; display: flex; justify-content: center; }
+  .card__art .drawing { height: 100%; width: auto; }
+  .card__hand { font-size: 1.3rem; }
+  .card__fa { font-size: .75rem; color: var(--ink-soft); }
+  @media (min-width: 600px) { .cards { gap: 22px; } .card { aspect-ratio: 1.25 / 1; } .card__art { height: 56%; } .card__hand { font-size: clamp(1.5rem, 3.2vw, 2.2rem); } }
+
+  .track { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 12px 4px; scrollbar-width: none; }
+  .track::-webkit-scrollbar { display: none; }
+  .item { --edge-x: 20%; --edge-y: 20%; flex: 0 0 min(240px, 74%); scroll-snap-align: start; display: grid; justify-items: center; gap: 6px; padding: 12px; border-radius: 16px; background: color-mix(in srgb, #f6f0cf 55%, var(--paper-2)); text-align: center; }
+  .item .drawing { width: 100%; max-width: 200px; height: auto; aspect-ratio: 140 / 110; }
+  .item__name { font-family: var(--body-hand); font-size: 1.3rem; font-weight: 700; }
+  @media (min-width: 900px) { .item { flex-basis: calc((100% - 3 * 14px) / 3.4); } }
+
+  /* ---------- Form ---------- */
+  .panel { --edge-x: 10%; --edge-y: 12%; --tint-strength: .6; padding: 20px; border-radius: 16px; background: var(--paper-2); }
+  .form { display: grid; gap: 14px; }
+  .field__msg { margin: 0; color: var(--danger); font-size: .85rem; }
+  .field--error .field__box { box-shadow: 0 0 0 2px var(--danger); }
+  .row { display: grid; gap: 14px; }
+  @media (min-width: 600px) { .row { grid-template-columns: 1fr 1fr; } }
+
+  /* ---------- Footer ---------- */
+  .footer { --edge-x: 50%; --edge-y: 40%; --tint-strength: .75; margin-top: 48px; background: color-mix(in srgb, var(--band) 50%, var(--paper)); padding-top: 28px; }
+  .footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; margin-top: 22px; padding-block: 14px calc(env(safe-area-inset-bottom, 0px) + 18px); border-top: 1.5px dashed rgb(47 36 27 / .35); font-size: .85rem; }
+  .footer__bottom p { margin: 0; }
+  .hours li { display: flex; justify-content: space-between; gap: 4px 12px; } .hours .num { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<header class="header" data-sketch="bottom" data-tint="#c9803e" data-seed="4" dir="ltr">
+  <div class="header__inner">
+    <nav class="nav" aria-label="Main"><a href="#contact">contact</a><a href="#menu">menu</a></nav>
+    <a class="badge" href="#top" data-sketch data-radius="999" data-seed="7" data-tint="#d9a066" aria-label="DEMO Brand, home"><b>Brand</b>HOUSE</a>
+    <nav class="nav" aria-label="More"><a href="#about">About us</a><a href="#order">order</a></nav>
+    <button class="icon-btn menu-btn" type="button" data-sketch data-radius="14" data-seed="18" aria-controls="menu" aria-expanded="false" aria-label="باز کردن منو">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="منو">
+  <button class="icon-btn" type="button" data-close aria-label="بستن">×</button>
+  <ul>
+    <li><a href="#menu">منو <span class="hand-text" dir="ltr">menu</span></a></li>
+    <li><a href="#about">درباره ما <span class="hand-text" dir="ltr">About us</span></a></li>
+    <li><a href="#order">سفارش <span class="hand-text" dir="ltr">order</span></a></li>
+    <li><a href="#contact">تماس <span class="hand-text" dir="ltr">contact</span></a></li>
+  </ul>
+</dialog>
+
+<main id="top">
+  <section class="hero" data-sketch="bottom" data-tint="#8fa45c" data-seed="9" aria-labelledby="hero-title">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <h1 id="hero-title">
+          <span class="hero__hand" data-hand data-seed="3">Delicious Coffee</span>
+          <span class="hero__line">DEMO: یک جمله که می‌گوید اینجا چیست، <mark class="scribble">حال خوب</mark></span>
+        </h1>
+        <p>DEMO: دو جمله‌ی ساده درباره‌ی کسب‌وکار و اینکه بازدیدکننده چه کاری می‌تواند بکند.</p>
+        <div class="cta">
+          <a class="btn btn--primary" href="#order" data-sketch data-radius="14" data-seed="5" data-tint="#a8693a">اقدام اصلی</a>
+          <a class="btn btn--ghost" href="#contact" data-sketch data-radius="14" data-seed="6">اقدام دوم</a>
+        </div>
+      </div>
+      <div class="stage" aria-roledescription="carousel" aria-label="منتخب">
+        <div class="scenes">
+          <div class="scene is-active" id="s0"><span data-art="iced" data-draw-in></span><span data-art="latte" data-label="DEMO لاته" data-draw-in></span><span data-art="choco" data-draw-in></span></div>
+          <div class="scene" id="s1" aria-hidden="true"><span data-art="cake"></span><span data-art="croissant" data-label="DEMO کروسان"></span><span data-art="steam"></span></div>
+        </div>
+        <div class="dots" role="tablist" aria-label="انتخاب تصویر">
+          <button type="button" role="tab" aria-selected="true" aria-controls="s0" aria-label="تصویر ۱"></button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="s1" aria-label="تصویر ۲"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" aria-label="دسته‌ها">
+    <div class="cards">
+      <a class="card" href="#menu" data-sketch data-tint="#d08a45" data-seed="21"><span class="card__art" data-art="fries"></span><span class="card__hand" data-hand data-seed="5">Food</span><span class="card__fa">غذا</span></a>
+      <a class="card" href="#menu" data-sketch data-tint="#d08a45" data-seed="34"><span class="card__art" data-art="cupcake"></span><span class="card__hand" data-hand data-seed="8">Cake</span><span class="card__fa">کیک</span></a>
+      <a class="card" href="#menu" data-sketch data-tint="#d08a45" data-seed="47"><span class="card__art" data-art="steam"></span><span class="card__hand" data-hand data-seed="11">Special</span><span class="card__fa">ویژه</span></a>
+    </div>
+  </section>
+
+  <section class="container" id="menu" aria-labelledby="menu-title">
+    <h2 class="section-head" id="menu-title"><span class="section-head__hand" data-hand data-seed="17">Special menu</span><span class="section-head__fa">DEMO پیشنهادهای این هفته</span></h2>
+    <div class="track" tabindex="0" aria-label="پیشنهادها">
+      <article class="item" data-sketch data-tint="#c7c25e" data-seed="100"><span data-art="croissant"></span><span class="item__name">DEMO کروسان شکلاتی</span></article>
+      <article class="item" data-sketch data-tint="#c7c25e" data-seed="103"><span data-art="cheesecake"></span><span class="item__name">DEMO چیزکیک</span></article>
+      <article class="item" data-sketch data-tint="#c7c25e" data-seed="106"><span data-art="burger"></span><span class="item__name">DEMO همبرگر</span></article>
+      <article class="item" data-sketch data-tint="#c7c25e" data-seed="109"><span data-art="pasta"></span><span class="item__name">DEMO پاستا</span></article>
+    </div>
+  </section>
+
+  <section class="container" id="order" aria-labelledby="order-title">
+    <div class="panel" data-sketch data-tint="#a9bb72" data-seed="601">
+      <h2 id="order-title">فرم</h2>
+      <form class="form" id="form" novalidate>
+        <div class="row">
+          <div class="field"><label for="f-name">نام</label><div class="field__box" data-sketch data-radius="10" data-seed="31"><input id="f-name" name="name" autocomplete="name"></div><p class="field__msg" id="f-name-err" hidden></p></div>
+          <div class="field"><label for="f-phone">موبایل</label><div class="field__box" data-sketch data-radius="10" data-seed="37"><input id="f-phone" name="phone" type="tel" inputmode="tel" dir="ltr" placeholder="0912 345 6789" autocomplete="tel"></div><p class="field__msg" id="f-phone-err" hidden></p></div>
+        </div>
+        <button class="btn btn--primary" type="submit" data-sketch data-radius="14" data-seed="8" data-tint="#a8693a">ثبت</button>
+      </form>
+      <p id="form-ok" role="status" hidden></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="contact" data-sketch="top" data-tint="#c9803e" data-seed="233">
+  <div class="container">
+    <ul class="hours" style="list-style:none;padding:0;margin:0;display:grid;gap:6px;max-width:320px">
+      <li><span>DEMO شنبه تا چهارشنبه</span><span class="num">۸:۰۰ – ۲۳:۰۰</span></li>
+    </ul>
+    <div class="footer__bottom"><p>© ۱۴۰۵ DEMO</p><p><b>DEMO توسعه یافته توسط …</b></p></div>
+  </div>
+</footer>
+
+<script src="sketchbook.js"></script>
+<script src="art-library.js"></script>
+<script>
+  // Phone menu: native <dialog>, aria-expanded kept in sync
+  const menuBtn = document.querySelector(".menu-btn"), sheet = document.getElementById("menu");
+  menuBtn.addEventListener("click", () => { sheet.showModal(); menuBtn.setAttribute("aria-expanded", "true"); });
+  sheet.addEventListener("close", () => menuBtn.setAttribute("aria-expanded", "false"));
+  sheet.querySelectorAll("a, [data-close]").forEach((el) => el.addEventListener("click", () => sheet.close()));
+  sheet.addEventListener("click", (e) => { if (e.target === sheet) sheet.close(); });
+
+  // Hero carousel
+  const scenes = [...document.querySelectorAll(".scene")], dots = [...document.querySelectorAll(".dots button")];
+  let cur = 0;
+  const show = (i) => {
+    cur = (i + scenes.length) % scenes.length;
+    scenes.forEach((s, n) => { s.classList.toggle("is-active", n === cur); s.setAttribute("aria-hidden", n !== cur); });
+    dots.forEach((d, n) => d.setAttribute("aria-selected", n === cur));
+  };
+  dots.forEach((d, i) => d.addEventListener("click", () => show(i)));
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => show(cur + 1), 7000);
+
+  // Form: Persian digits accepted, errors under fields, focus first error, success in place
+  const toAscii = (s) => s.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[\s-]/g, "");
+  const form = document.getElementById("form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const errs = {};
+    if (form.name.value.trim().length < 2) errs.name = "نام را وارد کنید.";
+    if (!/^(\+98|0)?9\d{9}$/.test(toAscii(form.phone.value))) errs.phone = "شماره موبایل باید ۱۱ رقم باشد و با ۰۹ شروع شود.";
+    for (const k of ["name", "phone"]) {
+      const msg = document.getElementById(`f-${k}-err`), field = msg.closest(".field");
+      msg.hidden = !errs[k]; msg.textContent = errs[k] || "";
+      field.classList.toggle("field--error", !!errs[k]);
+      form[k].setAttribute("aria-invalid", !!errs[k]);
+      errs[k] ? form[k].setAttribute("aria-describedby", msg.id) : form[k].removeAttribute("aria-describedby");
+    }
+    const first = Object.keys(errs)[0];
+    if (first) return form[first].focus();
+    form.hidden = true;
+    const ok = document.getElementById("form-ok");
+    ok.hidden = false;
+    ok.textContent = "DEMO: ثبت شد. کد پیگیری: " + Math.floor(1000 + Math.random() * 9000).toLocaleString("fa-IR");
+  });
+</script>
+</body>
+</html>
