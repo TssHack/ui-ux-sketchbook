@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: ["**"]
   pull_request:
   workflow_dispatch:
 
@@ -50,6 +50,38 @@ jobs:
         run: npm run check:js
       - name: Type-check the React build
         run: npm run typecheck
+
+  flutter:
+    name: Flutter package and example
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Dart illustration library matches the JS one
+        run: |
+          node tools/gen_flutter_art.js
+          git diff --exit-code -- skills/ui-ux-sketchbook/assets/flutter/lib/src/art_library.dart
+      - uses: subosito/flutter-action@v2.23.0
+        with:
+          channel: stable
+          flutter-version: "3.47.6"
+          cache: true
+      - name: Package - analyze and test
+        working-directory: skills/ui-ux-sketchbook/assets/flutter
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
+      - name: Example - analyze, test and build for web
+        working-directory: examples/flutter_cafe
+        run: |
+          flutter create --platforms=web --project-name flutter_cafe --no-pub .
+          flutter pub get
+          flutter analyze
+          flutter test
+          flutter build web --release --base-href /ui-ux-sketchbook/flutter/
 
   build:
     name: Build packages and demo
