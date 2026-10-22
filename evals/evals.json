@@ -1,0 +1,26 @@
+{
+  "skill_name": "ui-ux-sketchbook",
+  "evals": [
+    {
+      "id": 1,
+      "name": "cafe-sketch-photo",
+      "prompt": "این طرح دستی سایت کافه‌مه که روی کاغذ کشیدم. ازش یه سایت واقعی و کامل بساز، دقیقاً حس همین نقاشی رو داشته باشه و روی موبایل هم درست کار کنه. همه‌چیز توی یک فایل index.html باشه که بتونم مستقیم باز کنم.",
+      "expected_output": "A single self-contained RTL Persian index.html that follows the sketch's sections in order (nav band with round badge logo, green hero carousel with 3 dots, Food/Cake/Special cards with leaves, bean divider, Special menu with coloured pills and an RTL card scroller), looks hand-drawn, has working mobile navigation and at least one usable flow, and does not scroll sideways on a phone.",
+      "files": ["inputs/cafe-sketch.webp"]
+    },
+    {
+      "id": 2,
+      "name": "bakery-described",
+      "prompt": "برای نانوایی خواهرم توی شیراز («نان و نسیم») یه لندینگ‌پیج می‌خوام با حس دفترچه‌ی نقاشی، انگار با خودکار و مداد رنگی کشیده شده. بالا یه نوار با لوگوی گرد، بعد یه بخش اصلی با عکس نون‌ها (نقاشی شده)، بعد سه کارت «نان سنتی، شیرینی، کیک سفارشی»، بعد ساعت کاری و یه فرم سفارش کیک. فارسی و راست‌چین. فقط یه فایل HTML بده.",
+      "expected_output": "A single self-contained RTL Persian HTML landing page in a hand-drawn ink + coloured-pencil style with the requested sections, drawn bread illustrations, a cake order form with validation and a success state, responsive from 320px up.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "illustrator-portfolio",
+      "prompt": "I'm a children's book illustrator and I want my portfolio site to look like a page from my sketchbook - wobbly ink lines, coloured pencil shading, hand-lettered headings, little doodles in the margins. Sections: intro, selected books (6 covers, I'll swap in real images later so just draw placeholders), about, and a contact form for publishers. It has to work well on phones since most people find me via Instagram. One HTML file please.",
+      "expected_output": "A single self-contained English (LTR) HTML portfolio in the sketchbook style with intro, a 6-item book grid with drawn placeholders, about, and a validated contact form; mobile-first and phone-friendly.",
+      "files": []
+    }
+  ]
+}
