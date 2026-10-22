@@ -1,8 +1,8 @@
 {
   "name": "ui-ux-sketchbook",
   "displayName": "UI/UX Sketchbook",
-  "version": "1.0.0",
-  "description": "Build real, responsive websites that look hand-drawn: ink outlines, coloured-pencil shading, hand lettering and illustrations, with first-class RTL support.",
+  "version": "1.1.0",
+  "description": "Build real, responsive websites and Flutter apps that look hand-drawn: ink outlines, coloured-pencil shading, hand lettering and illustrations, with first-class RTL support.",
   "author": {
     "name": "Ehsan Fazli",
     "email": "ehsanfazlinejad@gmail.com",
@@ -11,5 +11,5 @@
   "homepage": "https://github.com/TssHack/ui-ux-sketchbook",
   "repository": "https://github.com/TssHack/ui-ux-sketchbook",
   "license": "MIT",
-  "keywords": ["ui", "ux", "design", "hand-drawn", "sketch", "rtl", "persian", "frontend", "nextjs", "skill"]
+  "keywords": ["ui", "ux", "design", "hand-drawn", "sketch", "rtl", "persian", "frontend", "nextjs", "flutter", "skill"]
 }

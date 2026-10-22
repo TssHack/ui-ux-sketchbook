@@ -10,7 +10,7 @@
     {
       "name": "ui-ux-sketchbook",
       "source": ".",
-      "description": "Build real, responsive websites that look hand-drawn: ink outlines, coloured-pencil shading, hand lettering and illustrations, with first-class RTL support.",
+      "description": "Build real, responsive websites and Flutter apps that look hand-drawn: ink outlines, coloured-pencil shading, hand lettering and illustrations, with first-class RTL support.",
       "category": "design",
       "tags": ["ui", "ux", "design", "hand-drawn", "rtl"]
     }
