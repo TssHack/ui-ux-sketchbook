@@ -1,0 +1,60 @@
+name: Release
+
+# Push a tag like v1.2.0 (matching .claude-plugin/plugin.json and a CHANGELOG section) to publish.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate (tag must match plugin.json version)
+        run: python tools/validate.py --tag "${GITHUB_REF_NAME}"
+      - name: Build packages
+        run: python tools/build.py package
+      - name: Release notes from CHANGELOG
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          awk -v v="$VERSION" '
+            $0 ~ "^## \\[" v "\\]" { on = 1; next }
+            on && /^## \[/ { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          cat >> notes.md <<EOF
+
+          ## Install
+
+          **Claude Code**
+          \`\`\`
+          /plugin install ui-ux-sketchbook --marketplace TssHack/ui-ux-sketchbook
+          \`\`\`
+
+          **Any agent (Codex, Cursor and 40+ more)**
+          \`\`\`
+          npx skills add TssHack/ui-ux-sketchbook
+          \`\`\`
+
+          **Hermes Agent, or a pinned version anywhere**
+          \`\`\`
+          curl -fsSL https://raw.githubusercontent.com/TssHack/ui-ux-sketchbook/${GITHUB_REF_NAME}/install.sh | sh -s -- --agent hermes --version ${GITHUB_REF_NAME}
+          \`\`\`
+
+          Verify downloads with \`SHA256SUMS\`.
+          EOF
+          cat notes.md
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/* \
+            --title "ui-ux-sketchbook ${GITHUB_REF_NAME}" \
+            --notes-file notes.md \
+            --verify-tag
