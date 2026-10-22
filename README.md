@@ -162,6 +162,8 @@ The agent picks the build from your request: one HTML file means plain JS, a Nex
 | **Starter** | `assets/vanilla/starter.html` | — | `examples/flutter_cafe/` |
 | **Dependencies** | none | React | Flutter SDK only |
 
+<p align="center"><img src="docs/preview-flutter.png" alt="The same café built with the Flutter package: band with round badge, green hero with drawn coffee, pencil-shaded Food, Cake and Special cards" width="86%"><br><sub>The café rebuilt with the <b>Flutter</b> package (<a href="https://tsshack.github.io/ui-ux-sketchbook/flutter/">live</a>). Same drawings, same outlines, one codebase for mobile, web and desktop.</sub></p>
+
 <table>
 <tr><th>Plain JS</th><th>React</th><th>Flutter</th></tr>
 <tr valign="top"><td>

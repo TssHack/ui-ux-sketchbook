@@ -48,7 +48,7 @@ const Map<String, DrawingSpec> sketchArt = {
       DrawingShape('M53 128 a7 4.5 0 1 0 14 0 a7 4.5 0 1 0 -14 0 Z', fill: Color(0xFF8A5634), ink: 1.6, transform: 'rotate(-20 60 128)'),
       DrawingShape('M54 129 Q60 125 66 127', ink: 1.3, transform: 'rotate(-20 60 128)'),
     ],
-    labels: [SketchLabel('Lotus', x: 56, y: 108, size: 25, rotate: -6)],
+    labels: [SketchLabel('Lotus', x: 56, y: 108, size: 25, rotate: -6, fontFamily: 'GochiHand')],
   ),
   'fries': DrawingSpec(
     viewBox: Rect.fromLTWH(0, 0, 60, 80),
