@@ -18,11 +18,11 @@ jobs:
     name: Validate skill and manifests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - name: Skill frontmatter, referenced files, versions, changelog
@@ -41,8 +41,8 @@ jobs:
     name: JavaScript and TypeScript
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - run: npm install --no-audit --no-fund
@@ -56,8 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, code]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Build
@@ -67,11 +67,11 @@ jobs:
           tar -tzf dist/ui-ux-sketchbook.tar.gz | grep -qx "ui-ux-sketchbook/SKILL.md"
           python -c "import zipfile; assert 'ui-ux-sketchbook/SKILL.md' in zipfile.ZipFile('dist/ui-ux-sketchbook.zip').namelist()"
           cat dist/SHA256SUMS
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ui-ux-sketchbook-packages
           path: dist/
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: demo-site
           path: site/
@@ -80,7 +80,7 @@ jobs:
     name: Installer (Linux)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: shellcheck
         run: shellcheck install.sh
       - name: Install from the checkout
@@ -94,7 +94,7 @@ jobs:
     name: Installer (Windows)
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install from the checkout
         shell: pwsh
         run: |

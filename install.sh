@@ -57,7 +57,7 @@ fi
 case "$AGENTS" in *all*) AGENTS="claude codex cursor hermes" ;; esac
 
 # Use a local checkout when the script runs from one, otherwise download the release.
-SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" 2>/dev/null && pwd || echo "")
+SCRIPT_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")" 2>/dev/null && pwd || echo "")
 if [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/skills/$NAME/SKILL.md" ]; then
   SRC="$SCRIPT_DIR/skills/$NAME"
 else
