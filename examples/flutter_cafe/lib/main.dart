@@ -3,6 +3,17 @@ import 'package:sketchbook/sketchbook.dart';
 
 void main() => runApp(const CafeApp());
 
+/// HandText in the bundled handwriting face.
+class Hand extends StatelessWidget {
+  const Hand(this.text, {super.key, this.seed = 1, this.style});
+  final String text;
+  final int seed;
+  final TextStyle? style;
+  @override
+  Widget build(BuildContext context) =>
+      HandText(text, seed: seed, style: const TextStyle(fontFamily: 'GochiHand').merge(style));
+}
+
 /// Breakpoints shared with the web builds.
 const double kTablet = 600, kDesktop = 900;
 
@@ -111,7 +122,7 @@ class _Header extends StatelessWidget {
       background: SketchColors.paper2,
       child: SizedBox.square(
         dimension: wide ? 110 : 56,
-        child: Center(child: HandText('Caffee House', seed: 3, style: TextStyle(fontSize: wide ? 22 : 11))),
+        child: Center(child: Hand('Caffee House', seed: 3, style: TextStyle(fontSize: wide ? 22 : 11))),
       ),
     );
     final links = ['contact', 'coffee', 'food', 'About us', 'menu'];
@@ -127,9 +138,9 @@ class _Header extends StatelessWidget {
           textDirection: TextDirection.ltr, // nav order as drawn in the sketch
           child: Row(children: [
             if (wide) ...[
-              for (final l in links.take(3)) Expanded(child: Center(child: HandText(l, seed: l.length, style: hand))),
+              for (final l in links.take(3)) Expanded(child: Center(child: Hand(l, seed: l.length, style: hand))),
               badge,
-              for (final l in links.skip(3)) Expanded(child: Center(child: HandText(l, seed: l.length, style: hand))),
+              for (final l in links.skip(3)) Expanded(child: Center(child: Hand(l, seed: l.length, style: hand))),
             ] else ...[
               badge,
               const Spacer(),
@@ -192,7 +203,7 @@ class _MenuSheet extends StatelessWidget {
             for (final (fa, en) in [('منو', 'menu'), ('درباره ما', 'About us'), ('غذا', 'food'), ('قهوه', 'coffee'), ('تماس', 'contact')])
               ListTile(
                 title: Text(fa, style: const TextStyle(fontWeight: FontWeight.w700)),
-                trailing: HandText(en, style: const TextStyle(fontSize: 20, color: SketchColors.inkSoft)),
+                trailing: Hand(en, style: const TextStyle(fontSize: 20, color: SketchColors.inkSoft)),
                 onTap: () => Navigator.pop(context),
               ),
           ]),
@@ -221,7 +232,7 @@ class _HeroState extends State<_Hero> {
     final copy = Column(
       crossAxisAlignment: wide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
-        HandText('Delicious Coffee', seed: 3, style: TextStyle(fontSize: wide ? 58 : 40, color: SketchColors.ink)),
+        Hand('Delicious Coffee', seed: 3, style: TextStyle(fontSize: wide ? 58 : 40, color: SketchColors.ink)),
         const SizedBox(height: 6),
         const Text('قهوه‌ی تازه، کیک خانگی، حال خوب', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
         const SizedBox(height: 10),
@@ -335,7 +346,7 @@ class _Categories extends StatelessWidget {
                 padding: EdgeInsets.all(narrow ? 10 : 16),
                 child: Column(children: [
                   SizedBox(height: narrow ? 58 : 110, child: SketchDrawing.named(art)),
-                  HandText(en, seed: 5 + i * 3, style: TextStyle(fontSize: narrow ? 20 : 32)),
+                  Hand(en, seed: 5 + i * 3, style: TextStyle(fontSize: narrow ? 20 : 32)),
                   Text(fa, style: const TextStyle(fontSize: 12, color: SketchColors.inkSoft)),
                 ]),
               ),
@@ -364,7 +375,7 @@ class _Specials extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(children: [
-            const HandText('Special menu', seed: 17, style: TextStyle(fontSize: 36)),
+            const Hand('Special menu', seed: 17, style: TextStyle(fontSize: 36)),
             const Text('پیشنهادهای این هفته', style: TextStyle(fontWeight: FontWeight.w700, color: SketchColors.inkSoft)),
             const SizedBox(height: 12),
             SizedBox(
@@ -414,7 +425,7 @@ class _Footer extends StatelessWidget {
         background: Color.lerp(SketchColors.band, SketchColors.paper, 0.5),
         child: const _Section(
           child: Column(children: [
-            HandText('Caffee House', seed: 41, style: TextStyle(fontSize: 30)),
+            Hand('Caffee House', seed: 41, style: TextStyle(fontSize: 30)),
             SizedBox(height: 6),
             Text('ساخته‌شده با پکیج فلاتر ui-ux-sketchbook', style: TextStyle(color: SketchColors.inkSoft)),
           ]),

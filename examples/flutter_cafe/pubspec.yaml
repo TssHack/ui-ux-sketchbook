@@ -18,3 +18,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    # Gochi Hand, SIL Open Font License 1.1 (fonts/OFL.txt)
+    - family: GochiHand
+      fonts:
+        - asset: fonts/GochiHand-Regular.ttf
