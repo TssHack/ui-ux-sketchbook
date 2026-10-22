@@ -1,6 +1,6 @@
 ---
 name: ui-ux-sketchbook
-description: Build real, responsive websites and web apps that look hand-drawn, like a page from a sketchbook — shaky fine-liner ink outlines, coloured-pencil shading gathered at the edges, hand-lettered titles, ink-and-pencil illustrations — including RTL Persian/Arabic sites. Use this skill whenever the user shares a photo or scan of a hand-drawn website/app sketch or wireframe and wants it built ("implement this drawing", "پیاده‌اش کن", "این طرح دستی رو بساز"), or asks for a hand-drawn, sketchy, doodle, notebook, crayon, coloured-pencil, paper or "illustrated" look for a site, landing page, café/restaurant/shop menu, portfolio or app UI — even if they don't say "sketchbook". Ships the primitives in two builds, a plain-JS single-file starter and React/Next.js components (rough outlines, pencil shading, 15 illustrations, hand lettering), plus responsive and performance rules learned the hard way.
+description: Build real, responsive websites and cross-platform Flutter apps that look hand-drawn, like a page from a sketchbook — shaky fine-liner ink outlines, coloured-pencil shading gathered at the edges, hand-lettered titles, ink-and-pencil illustrations — including RTL Persian/Arabic UIs. Use this skill whenever the user shares a photo or scan of a hand-drawn website/app sketch or wireframe and wants it built ("implement this drawing", "پیاده‌اش کن", "این طرح دستی رو بساز"), or asks for a hand-drawn, sketchy, doodle, notebook, crayon, coloured-pencil, paper or "illustrated" look for a site, landing page, café/restaurant/shop menu, portfolio or mobile/desktop app UI — even if they don't say "sketchbook". Ships the primitives in three builds, plain JS with a single-file starter, React/Next.js components and a Flutter package (rough outlines, pencil shading, 15 illustrations, hand lettering), plus responsive and performance rules learned the hard way.
 ---
 
 # ui-ux-sketchbook
@@ -24,11 +24,12 @@ Then plan the real site around it: which pages the nav implies, what the primary
 
 ## 2. Set up the primitives
 
-The `assets/` folder holds code that already works, in two builds. Copy, don't rewrite or port by hand.
+The `assets/` folder holds code that already works, in three builds. Copy, don't rewrite or port by hand.
 
 **Pick the build from what the user asked for:**
 - A single HTML file, a static page, "no framework", or anything that must open straight from disk → **plain-JS build** (`assets/vanilla/`), below.
 - A React / Next.js project, or a multi-page app the user will keep developing → **React build** (`assets/components/`), further down.
+- A Flutter app, or a mobile / desktop app ("cross-platform", Android, iOS, Windows, macOS) → **Flutter build** (`assets/flutter/`), further down.
 
 ### Plain-JS build (single-file pages)
 
@@ -86,6 +87,21 @@ Next.js App Router is what this was built and tested on; `SketchBox` is a client
 - Use one tint family per region, taken from the sketch.
 - New illustrations: read `references/drawing.md`.
 
+### Flutter build (Android, iOS, web, desktop)
+
+`assets/flutter/` is a Dart package named `sketchbook` that needs only the Flutter SDK (3.27+). Copy it into the app (for example `packages/sketchbook/`) and add `sketchbook: {path: packages/sketchbook}` to `pubspec.yaml`. Read `references/flutter.md` before building: it covers fonts, layout, RTL and performance.
+
+```dart
+SketchBox(edges: {SketchEdge.bottom}, tint: SketchColors.sage, child: hero)          // band, one rough edge
+SketchBox(tint: SketchColors.caramel, seed: 21, padding: EdgeInsets.all(16), child: card)
+SketchBox(radius: 999, child: badge)                                                  // round badge
+SketchDrawing.named('latte', label: 'لاته', drawIn: true)                               // illustration, traces itself in
+SketchDrawing.named('bean', lite: true)                                               // small icon: cheap render
+HandText('Special menu', seed: 17, style: TextStyle(fontSize: 36))                    // Latin only
+```
+
+`examples/flutter_cafe/` in the skill's repository is a complete responsive RTL home page built with it, with widget tests at 360, 768 and 1280.
+
 ## 3. Rules that keep it fast
 
 - **No SVG filters** (`feTurbulence`, `feDisplacementMap`) on shapes, outlines or text, and no CSS `filter: url(#…)` on page elements. They are the obvious way to fake ink and pencil, and with dozens of drawings on a page they become hundreds of filters re-run on every repaint. The wobble lives in the geometry (`rough.ts`), the grain in the `#hatch` pattern, the pencil edge in clipped strokes and CSS masks. The one exception is the paper-texture background tile in `sketch.css`, which is rasterised once.
@@ -120,7 +136,7 @@ Mobile-first CSS with breakpoints at 600 / 900 / 1200. Read `references/responsi
 
 ## 6. Verify before handing over
 
-1. Type-check / build (React), or `node --check` the inline scripts (plain JS).
+1. Type-check / build (React), `node --check` the inline scripts (plain JS), or `flutter analyze` + `flutter test` (Flutter).
 2. Open it in a browser at 320, 375, 768, ~920 and 1280. At each width run `scripts/audit-overflow.js` in the page and look at **every section** (use `#anchor` URLs to jump down if the preview doesn't repaint on scroll).
 3. Count SVG elements against the budget above.
 4. Walk the main flow end to end (add to cart → checkout → success; booking → confirmation), including one invalid submit.
